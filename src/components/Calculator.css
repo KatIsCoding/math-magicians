@@ -1,6 +1,5 @@
 .Calculator {
   max-width: 20%;
-  max-height: fit-content;
   display: grid;
 }
 
@@ -12,7 +11,7 @@ button {
   border-color: #bdbdbd;
 }
 
-.quote{
+.quote {
   background-color: gray;
   color: white;
   height: 50px;
@@ -28,7 +27,7 @@ button {
   background-color: #e0e0e0;
 }
 
-.number-section{
+.number-section {
   display: grid;
   grid-template-columns: auto auto auto;
 }
