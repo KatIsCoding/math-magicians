@@ -17,6 +17,7 @@ button {
   height: 50px;
   text-align: right;
   border-style: unset;
+  font-size: 30px;
 }
 
 .quote::placeholder {
