@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import calculate from '../logic/calculate';
 import './Calculator.css';
 
-function Operation({ operation }) {
+function Operation({ operation, cb }) {
   return (
-    <button type="button" className="operation">
+    <button type="button" className="operation" onClick={cb}>
       {operation}
     </button>
   );
 }
 
-function Number({ num }) {
+function Number({ num, cb }) {
   const style = {};
   if (num === '0') {
     style['grid-column'] = 'span 2';
   }
 
   return (
-    <button type="button" style={style} className="number">
+    <button type="button" style={style} className="number" onClick={cb}>
       {num}
     </button>
   );
@@ -25,21 +26,32 @@ function Number({ num }) {
 
 Number.propTypes = {
   num: PropTypes.string.isRequired,
+  cb: PropTypes.func.isRequired,
 };
 
 Operation.propTypes = {
   operation: PropTypes.string.isRequired,
+  cb: PropTypes.func.isRequired,
 };
-
-const numberSectionButtons = [];
-['AC', '+/-', '%', 7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'].forEach((el) => {
-  numberSectionButtons.push(<Number num={`${el}`} />);
-});
 
 class Calc extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      total: 0,
+      next: 0,
+      operation: null,
+    };
+    this.handleClick = this.handleClick.bind(this);
+    this.numberSectionButtons = [];
+    ['AC', '+/-', '%', 7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'].forEach((el) => {
+      this.numberSectionButtons.push(<Number num={`${el}`} cb={this.handleClick} />);
+    });
+  }
+
+  handleClick(e) {
+    this.setState((oldState) => calculate(oldState, e.target.innerText));
+    console.log(this.state);
   }
 
   render() {
@@ -48,14 +60,14 @@ class Calc extends React.Component {
         <input className="quote" placeholder="0" />
         <div className="buttons">
           <div className="number-section">
-            {numberSectionButtons}
+            {this.numberSectionButtons}
           </div>
           <div className="operation-section">
-            <Operation operation="÷" />
-            <Operation operation="X" />
-            <Operation operation="-" />
-            <Operation operation="+" />
-            <Operation operation="=" />
+            <Operation operation="÷" cb={this.handleClick} />
+            <Operation operation="x" cb={this.handleClick} />
+            <Operation operation="-" cb={this.handleClick} />
+            <Operation operation="+" cb={this.handleClick} />
+            <Operation operation="=" cb={this.handleClick} />
           </div>
         </div>
       </div>
