@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import calculate from '../logic/calculate';
 import './Calculator.css';
@@ -11,6 +11,11 @@ function Operation({ operation, cb }) {
   );
 }
 
+Operation.propTypes = {
+  operation: PropTypes.string.isRequired,
+  cb: PropTypes.func.isRequired,
+};
+
 function Number({ num, cb }) {
   const style = {};
   if (num === '0') {
@@ -18,7 +23,13 @@ function Number({ num, cb }) {
   }
 
   return (
-    <button type="button" style={style} className="number" onClick={cb}>
+    <button
+      type="button"
+      style={style}
+      className="number"
+      onClick={cb}
+
+    >
       {num}
     </button>
   );
@@ -29,56 +40,46 @@ Number.propTypes = {
   cb: PropTypes.func.isRequired,
 };
 
-Operation.propTypes = {
-  operation: PropTypes.string.isRequired,
-  cb: PropTypes.func.isRequired,
-};
+function Calc() {
+  const [state, setState] = useState({
+    total: 0,
+    next: 0,
+    operation: '',
+  });
 
-class Calc extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      total: 0,
-      next: 0,
-    };
-    this.handleClick = this.handleClick.bind(this);
-    this.numberSectionButtons = [];
-    ['AC', '+/-', '%', 7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'].forEach((el) => {
-      this.numberSectionButtons.push(<Number num={`${el}`} cb={this.handleClick} />);
-    });
-  }
+  const numberSectionButtons = [];
+  ['AC', '+/-', '%', 7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'].forEach((el) => {
+    numberSectionButtons.push(<Number
+      num={`${el}`}
+      cb={() => {
+        setState((old) => calculate(old, `${el}`));
+      }}
+    />);
+  });
 
-  handleClick(e) {
-    this.setState((oldState) => calculate(oldState, e.target.innerText));
-  }
-
-  render() {
-    let val = 0;
-    const { total, next } = this.state;
-    if (next) {
-      val = next;
-    } else if (total) {
-      val = total;
-    }
-    return (
-      <div className="Calculator">
-        <input className="quote" placeholder="0" value={val} readOnly />
-        <div className="buttons">
-          <div className="number-section">
-            {this.numberSectionButtons}
-          </div>
-          <div className="operation-section">
-            <Operation operation="÷" cb={this.handleClick} />
-            <Operation operation="x" cb={this.handleClick} />
-            <Operation operation="-" cb={this.handleClick} />
-            <Operation operation="+" cb={this.handleClick} />
-            <Operation operation="=" cb={this.handleClick} />
-          </div>
+  return (
+    <div className="Calculator">
+      <input
+        className="quote"
+        placeholder="0"
+        value={state.next ? state.next : state.total}
+        readOnly
+      />
+      <div className="buttons">
+        <div className="number-section">
+          {numberSectionButtons}
+        </div>
+        <div className="operation-section">
+          <Operation operation="÷" cb={() => setState((old) => ({ ...old, ...calculate(old, '÷') }))} />
+          <Operation operation="x" cb={() => setState((old) => ({ ...old, ...calculate(old, 'x') }))} />
+          <Operation operation="-" cb={() => setState((old) => ({ ...old, ...calculate(old, '-') }))} />
+          <Operation operation="+" cb={() => setState((old) => ({ ...old, ...calculate(old, '+') }))} />
+          <Operation operation="=" cb={() => setState((old) => ({ ...old, ...calculate(old, '=') }))} />
         </div>
       </div>
+    </div>
 
-    );
-  }
+  );
 }
 
 export default Calc;
