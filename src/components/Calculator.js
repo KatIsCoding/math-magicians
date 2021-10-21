@@ -40,7 +40,6 @@ class Calc extends React.Component {
     this.state = {
       total: 0,
       next: 0,
-      operation: null,
     };
     this.handleClick = this.handleClick.bind(this);
     this.numberSectionButtons = [];
@@ -51,13 +50,19 @@ class Calc extends React.Component {
 
   handleClick(e) {
     this.setState((oldState) => calculate(oldState, e.target.innerText));
-    console.log(this.state);
   }
 
   render() {
+    let val = 0;
+    const { total, next } = this.state;
+    if (next) {
+      val = next;
+    } else if (total) {
+      val = total;
+    }
     return (
       <div className="Calculator">
-        <input className="quote" placeholder="0" />
+        <input className="quote" placeholder="0" value={val} readOnly />
         <div className="buttons">
           <div className="number-section">
             {this.numberSectionButtons}
