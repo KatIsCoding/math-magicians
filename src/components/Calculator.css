@@ -46,3 +46,8 @@ button {
   display: grid;
   grid-template-columns: auto auto;
 }
+
+.CalculatorWrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
