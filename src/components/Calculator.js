@@ -58,23 +58,26 @@ function Calc() {
   });
 
   return (
-    <div className="Calculator">
-      <input
-        className="quote"
-        placeholder="0"
-        value={state.next ? state.next : state.total}
-        readOnly
-      />
-      <div className="buttons">
-        <div className="number-section">
-          {numberSectionButtons}
-        </div>
-        <div className="operation-section">
-          <Operation operation="÷" cb={() => setState((old) => ({ ...old, ...calculate(old, '÷') }))} />
-          <Operation operation="x" cb={() => setState((old) => ({ ...old, ...calculate(old, 'x') }))} />
-          <Operation operation="-" cb={() => setState((old) => ({ ...old, ...calculate(old, '-') }))} />
-          <Operation operation="+" cb={() => setState((old) => ({ ...old, ...calculate(old, '+') }))} />
-          <Operation operation="=" cb={() => setState((old) => ({ ...old, ...calculate(old, '=') }))} />
+    <div className="CalculatorWrapper">
+      <h1>Lets do some math!!</h1>
+      <div className="Calculator">
+        <input
+          className="quote"
+          placeholder="0"
+          value={state.next ? state.next : state.total}
+          readOnly
+        />
+        <div className="buttons">
+          <div className="number-section">
+            {numberSectionButtons}
+          </div>
+          <div className="operation-section">
+            <Operation operation="÷" cb={() => setState((old) => ({ ...old, ...calculate(old, '÷') }))} />
+            <Operation operation="x" cb={() => setState((old) => ({ ...old, ...calculate(old, 'x') }))} />
+            <Operation operation="-" cb={() => setState((old) => ({ ...old, ...calculate(old, '-') }))} />
+            <Operation operation="+" cb={() => setState((old) => ({ ...old, ...calculate(old, '+') }))} />
+            <Operation operation="=" cb={() => setState((old) => ({ ...old, ...calculate(old, '=') }))} />
+          </div>
         </div>
       </div>
     </div>
