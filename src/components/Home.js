@@ -3,10 +3,11 @@ import './Home.css';
 function Home() {
   return (
     <div className="Home">
+      <h1>Welcome to our page</h1>
       <p>
-        Mathematics is not about numbers, equations, computations, or algorithms.
-        It is about understanding.
-        - William Paul Thurston
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Quisquam quos quis doloremque, quae quam quisquam dolorum.
+        Quisquam, quisquam. Quisquam, quisquam.  Quisquam, quisquam.
       </p>
     </div>
   );

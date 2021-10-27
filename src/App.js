@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Calc from './components/Calculator';
 import Home from './components/Home';
-import About from './components/About';
+import Quote from './components/Quote';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,15 +27,15 @@ class App extends React.Component {
                 <li>Calculator</li>
               </Link>
               <li>|||</li>
-              <Link to="/about">
-                <li>About</li>
+              <Link to="/quote">
+                <li>Quote</li>
               </Link>
               <li>|||</li>
             </ul>
           </header>
           <Route exact path="/calc" component={Calc} />
           <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
+          <Route exact path="/quote" component={Quote} />
         </Router>
       </main>
     );
