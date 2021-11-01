@@ -8,6 +8,13 @@
 
 A simple calculator capable to do the basic operations.
 
+## Live demo
+
+[Netlify](https://katiscoding-math-magicians-app.netlify.app/)
+
+[Heroku](https://fabrizio-math-magicians.herokuapp.com/)
+
+
 ## Built With
 
 - CSS
